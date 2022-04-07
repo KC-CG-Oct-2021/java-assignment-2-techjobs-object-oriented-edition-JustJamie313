@@ -63,10 +63,11 @@ public class JobTest {
     public void testToStringStartsAndEndsWithNewLine(){
         Job job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         String jobString = job.toString();
-        String actual = jobString.substring(0,1);
-        Assert.assertEquals('\n','\n');
-        actual = jobString.substring(jobString.length()-1);
-        Assert.assertEquals('\n','\n');
+        char actual = jobString.charAt(0);
+        System.out.println("actual"+actual);
+        Assert.assertEquals('\n',actual);
+        actual = jobString.charAt(jobString.length()-1);
+        Assert.assertEquals('\n',actual);
     }
 //    @Test
 //    public void testJobToStringOutput(){
