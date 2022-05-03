@@ -46,6 +46,7 @@ public class TestTaskFour extends AbstractTest {
         try {
             testSettingJobIdMethod.invoke(jobTest);
         } catch (InvocationTargetException e) {
+            System.out.println(e.getCause());
             // do nothing: this is expected when using a mocked Job instance
         }
     }
