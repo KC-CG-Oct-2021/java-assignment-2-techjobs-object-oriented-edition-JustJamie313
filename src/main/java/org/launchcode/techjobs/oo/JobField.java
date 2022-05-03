@@ -6,13 +6,14 @@ public abstract class JobField {
     private int id;
     private static int nextId = 1;
     private String value;
+
     public JobField() {
         id = nextId;
         nextId++;
     }
-    public JobField(String aLocation){
+    public JobField(String aValue){
         this();
-        this.value = aLocation;
+        this.value = aValue;
     }
     public int getId() {
         return id;
@@ -20,6 +21,7 @@ public abstract class JobField {
     public String getValue() {
         return value;
     }
+
     public void setValue(String value) {
         this.value = value;
     }

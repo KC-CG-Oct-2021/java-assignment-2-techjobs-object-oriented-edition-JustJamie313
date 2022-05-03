@@ -1,7 +1,5 @@
 package org.launchcode.techjobs.oo;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 public class Job {
@@ -87,51 +85,28 @@ public class Job {
             return "\nOOPS! This job does not seem to exist.\n";
         }
 
-        try {
-            value =  String.format("\n" +
-                            "ID: %s\n" +
-                            "Name: %s\n" +
-                            "Employer: %s\n" +
-                            "Location: %s\n" +
-                            "Position Type: %s\n" +
-                            "Core Competency: %s\n",
-                    id == 0? DEFAULT_MESSAGE : id,
-                    getValueFromField("Name",true),
-                    getValueFromField("Employer",true),
-                    getValueFromField("Location",true),
-                    getValueFromField("PositionType",true),
-                    getValueFromField("CoreCompetency",true));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        value =  String.format("\n" +
+                        "ID: %s\n" +
+                        "Name: %s\n" +
+                        "Employer: %s\n" +
+                        "Location: %s\n" +
+                        "Position Type: %s\n" +
+                        "Core Competency: %s\n",
+                id == 0? DEFAULT_MESSAGE : id,
+                getValueFromField(name),
+                getValueFromField(employer),
+                getValueFromField(location),
+                getValueFromField(positionType),
+                getValueFromField(coreCompetency));
 
         return value;
     }
-    public String getValueFromField(String fieldName, Boolean substituteEmpty) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
-        String className = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-        String getterName = "get" + className;
-        Method getter = getClass().getMethod(getterName);
-        String value;
-
-        if (className.equals("Name")) {
-            value = (String) getter.invoke(this);
-        } else {
-            Class clazz = getClassByName(className);
-            Method getValueMethod = clazz.getMethod("getValue");
-            value = (String) getValueMethod.invoke(getter.invoke(this));
-        }
-        if (substituteEmpty && value == "") {
-            value = "Data not available";
-        }
-        return value;
+    public String getValueFromField(JobField field){
+        if(field == null || field.getValue() == "" ) field.setValue(DEFAULT_MESSAGE);
+        return field.getValue();
     }
-    public Class getClassByName(String className) throws ClassNotFoundException {
-        return Class.forName("org.launchcode.techjobs.oo." + className);
+    public String getValueFromField(String name){
+        if(name == null || name == "") name = DEFAULT_MESSAGE;
+        return name;
     }
 }
